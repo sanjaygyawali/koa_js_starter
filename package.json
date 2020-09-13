@@ -23,10 +23,11 @@
     "koa-json-error": "^3.1.2",
     "koa-ratelimit": "^4.1.1",
     "koa-router": "^8.0.8",
+    "koa-static": "^5.0.0",
     "koa-useragent": "^4.0.0",
     "log4js": "^6.2.0",
     "mysql": "^2.15.0",
-    "npm": "^6.14.5",
+    "npm": "^6.14.8",
     "pm2": "^4.3.0",
     "randexp": "^0.5.3"
   },
