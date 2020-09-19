@@ -1,4 +1,4 @@
-import Koa from "koa"
+import Koa from "koa";
 import bodyParser from "koa-bodyparser";
 import cors from "kcors";
 import userAgent from "koa-useragent";
@@ -6,15 +6,21 @@ import koaJsonError from "koa-json-error";
 // import ratelimit from "koa-ratelimit";
 // import redis from "ioredis";
 import { logger } from "./logs/log";
+import path from "path";
 
 // Routes
 import { router as baseRouter } from "./routes/base";
 import { router as userActionsRouter } from "./routes/user-actions";
 import { router as notesRouter } from "./routes/notes";
 
+import { router as ecommerceRouter } from "./routes/ecommerce-route";
+
 // Initialize app
 export const app = new Koa();
+var KoaStatic = require("koa-static");
+const staticDirPath = path.join(__dirname, "public");
 
+app.use(KoaStatic(staticDirPath));
 // Here's the rate limiter
 // app.use(
 //   ratelimit({
@@ -46,7 +52,7 @@ app.use(async (ctx, next) => {
 
 // Apply error json handling
 const errorOptions = {
-  postFormat: (e: any, obj: { stack: any; name: any; }) => {
+  postFormat: (e: any, obj: { stack: any; name: any }) => {
     // Here's where we'll stick our error logger.
     logger.info(obj);
     if (process.env.NODE_ENV !== "production") {
@@ -83,3 +89,6 @@ app.use(userActionsRouter.routes());
 app.use(userActionsRouter.allowedMethods());
 app.use(notesRouter.routes());
 app.use(notesRouter.allowedMethods());
+
+app.use(ecommerceRouter.routes());
+app.use(ecommerceRouter.allowedMethods());
