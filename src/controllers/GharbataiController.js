@@ -7,7 +7,7 @@ import { Note } from "../models/Note";
 import faker from "faker";
 import path from "path";
 const fs = require("fs");
-const baseUrl = "http://127.0.0.1:4000/assets/";
+const baseUrl = "http://127.0.0.1:3000/assets/";
 const assetFolder = path.join(__dirname, "../public/assets");
 let productImages = fs.readdirSync(assetFolder);
 
@@ -36,7 +36,20 @@ export const categories = async (ctx) => {
       }),
     });
   }
-  ctx.body = content;
+
+  let categories = {
+    id: faker.random.uuid(),
+    tag: faker.commerce.department(),
+    label: faker.commerce.department(),
+    parent_id: faker.random.uuid(),
+    children: faker.random.number({
+      min: 0,
+      max: 20,
+    }),
+    categories: content,
+  };
+
+  ctx.body = categories;
 };
 
 export const products = async (ctx) => {
@@ -90,7 +103,7 @@ export const ansestorCategory = async (ctx) => {
   }
   content.push({
     id: faker.random.uuid(),
-    label: ctx.request.query.currentCategory,
+    label: faker.commerce.department(),
   });
   ctx.body = content;
 };
@@ -195,4 +208,41 @@ export const availablelocations = async (ctx) => {
       name: "Bhaktapur",
     },
   ];
+};
+
+export const cartItemDetails = async (ctx) => {
+  let data = [];
+  let loop = 0;
+  // ctx.body = ctx.request.query;
+  // return;
+  let items = [];
+  // ctx.body = item;
+  // return;
+  if (ctx.request.query.items) {
+    items = JSON.parse(ctx.request.query.items);
+  }
+
+  for (let i = 0; i < items.length; i++) {
+    data.push({
+      id: items[i].id,
+      title: faker.commerce.productName(),
+      isOnSale: faker.random.boolean(),
+      image: baseUrl + faker.random.arrayElement(productImages),
+      isOnWishList: faker.random.boolean(),
+      rating: faker.random.number({
+        min: 1,
+        max: 5,
+      }),
+      regularPrice: faker.random.number({
+        min: 1000,
+        max: 1500,
+      }),
+      specialPrice: faker.random.number({
+        min: 100,
+        max: 1000,
+      }),
+      quantity: items[i].quantity,
+    });
+  }
+  ctx.body = data;
 };

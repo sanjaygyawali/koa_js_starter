@@ -12,24 +12,29 @@ import {
   categoryGallery,
   availablelocations,
   getCategoryById,
+  cartItemDetails,
 } from "../controllers/GharbataiController";
 import { production } from "knexfile";
 
 export const router = new Router();
 const jwtMiddleware = jwt({ secret: process.env.JWT_SECRET });
 
-const baseUrl = "/api/v1";
+const baseUrl = "";
 
-router.get(`${baseUrl}/categories`, categories);
-router.get(`${baseUrl}/category/:id`, categories);
 router.get(`${baseUrl}/products`, products);
-router.get(`${baseUrl}/ansestorcategory`, ansestorCategory);
-router.get(`${baseUrl}/childrencategory`, childrenCategory);
-router.get(`${baseUrl}/brands`, brands);
+//ROUTE ON TOP HAS MORE PRIORITY.
+router.get(`${baseUrl}/categories`, categories);
+router.get(`${baseUrl}/categories/gallery`, categoryGallery);
+router.get(`${baseUrl}/categories/:id/ansestor`, ansestorCategory);
+router.get(`${baseUrl}/categories/search`, childrenCategory);
+router.get(`${baseUrl}/categories/:id`, categories);
+
+router.get(`${baseUrl}/brands/search`, brands);
+
 router.get(`${baseUrl}/deals`, deals);
 router.get(`${baseUrl}/specialevents`, specialEvents);
-router.get(`${baseUrl}/categorygallery`, categoryGallery);
-router.get(`${baseUrl}/availablelocations`, availablelocations);
+router.get(`${baseUrl}/locations`, availablelocations);
+router.get(`${baseUrl}/cartItemDetails`, cartItemDetails);
 
 // router.post(`${baseUrl}/notes`, jwtMiddleware, create);
 // router.get(`${baseUrl}/notes/:id`, jwtMiddleware, show);

@@ -1,7 +1,7 @@
 require("dotenv").config();
-
+// sudo kill -9 $(sudo lsof -t -i:4000)
 const env = process.env.NODE_ENV || "development";
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 const src = "./index";
 
 const { app } = require(src);
