@@ -86,6 +86,109 @@ export const products = async (ctx) => {
   };
 };
 
+export const getProductDetail = async (ctx) => {
+  let images = [];
+  for (let i = 0; i < 7; i++) {
+    images.push({
+      id: faker.random.uuid(),
+      url: baseUrl + faker.random.arrayElement(productImages),
+    });
+  }
+  let product = {
+    id: faker.random.uuid(),
+    title: faker.commerce.productName(),
+    isOnSale: faker.random.boolean(),
+    image: baseUrl + faker.random.arrayElement(productImages),
+    images: images,
+    isOnWishList: faker.random.boolean(),
+    rating: faker.random.number({
+      min: 1,
+      max: 5,
+    }),
+    regularPrice: faker.random.number({
+      min: 1000,
+      max: 1500,
+    }),
+    specialPrice: faker.random.number({
+      min: 100,
+      max: 1000,
+    }),
+    description: faker.lorem.paragraphs(),
+    content: faker.lorem.paragraphs(),
+    videos: [
+      "https://www.youtube.com/watch?v=_O4zqE-jZkA",
+      "https://www.youtube.com/watch?v=0te6noMKffA",
+      "https://www.youtube.com/watch?v=NxSDNogkKX0&t=52s",
+      "https://www.youtube.com/watch?v=rj73lCWeZQw",
+      "https://www.youtube.com/watch?v=AtoZw7o2kRo",
+      "https://www.youtube.com/watch?v=96VSX9bZa6c",
+    ],
+    reviewCount: faker.random.number({
+      min: 10,
+      max: 100,
+    }),
+    attribute: {
+      brand: faker.company.companyName(),
+    },
+    isOnStock: faker.random.boolean(),
+  };
+  ctx.body = product;
+};
+
+export const getProductReview = async (ctx) => {
+  let data = [];
+  for (let i = 1; i < 10; i++) {
+    data.push({
+      id: faker.random.uuid(),
+      name: faker.name.firstName() + " " + faker.name.lastName(),
+      image: baseUrl + faker.random.arrayElement(productImages),
+      rating: faker.random.number({
+        min: 1,
+        max: 5,
+      }),
+      review: faker.lorem.paragraph(),
+    });
+  }
+  let pagination = {
+    total: 100,
+    currentPage: ctx.request.query.page ? ctx.request.query.page++ : 1,
+    lastPage: 10,
+  };
+
+  let ratingDetails = {
+    reviews: {
+      data,
+      pagination,
+    },
+    aggregrate: {
+      totalReviews: 100,
+      avgRating: 3,
+      rating: [
+        {
+          rating: 5,
+          review: 50,
+        },
+        {
+          rating: 4,
+          review: 20,
+        },
+        {
+          rating: 3,
+          review: 10,
+        },
+        {
+          rating: 2,
+          review: 5,
+        },
+        {
+          rating: 1,
+          review: 15,
+        },
+      ],
+    },
+  };
+  ctx.body = ratingDetails;
+};
 export const filterConfig = async (ctx) => {
   let sortByFilterList = [];
   let brands = [];
@@ -229,6 +332,7 @@ export const cartItemDetails = async (ctx) => {
       isOnSale: faker.random.boolean(),
       image: baseUrl + faker.random.arrayElement(productImages),
       isOnWishList: faker.random.boolean(),
+      brand: faker.company.companyName(),
       rating: faker.random.number({
         min: 1,
         max: 5,
