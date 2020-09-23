@@ -13,6 +13,8 @@ import {
   availablelocations,
   getCategoryById,
   cartItemDetails,
+  getProductDetail,
+  getProductReview,
 } from "../controllers/GharbataiController";
 import { production } from "knexfile";
 
@@ -22,6 +24,10 @@ const jwtMiddleware = jwt({ secret: process.env.JWT_SECRET });
 const baseUrl = "";
 
 router.get(`${baseUrl}/products`, products);
+router.get(`${baseUrl}/products/:id`, getProductDetail);
+router.get(`${baseUrl}/products/:id/review`, getProductReview);
+router.post(`${baseUrl}/products/:id/review`, getProductReview);
+
 //ROUTE ON TOP HAS MORE PRIORITY.
 router.get(`${baseUrl}/categories`, categories);
 router.get(`${baseUrl}/categories/gallery`, categoryGallery);
@@ -35,6 +41,8 @@ router.get(`${baseUrl}/deals`, deals);
 router.get(`${baseUrl}/specialevents`, specialEvents);
 router.get(`${baseUrl}/locations`, availablelocations);
 router.get(`${baseUrl}/cartItemDetails`, cartItemDetails);
+
+router.get(`${baseUrl}/cart/items`, cartItemDetails);
 
 // router.post(`${baseUrl}/notes`, jwtMiddleware, create);
 // router.get(`${baseUrl}/notes/:id`, jwtMiddleware, show);
