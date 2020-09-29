@@ -137,7 +137,7 @@ export const getProductDetail = async (ctx) => {
 
 export const getProductReview = async (ctx) => {
   let data = [];
-  for (let i = 1; i < 10; i++) {
+  for (let i = 1; i < 5; i++) {
     data.push({
       id: faker.random.uuid(),
       name: faker.name.firstName() + " " + faker.name.lastName(),
@@ -152,43 +152,45 @@ export const getProductReview = async (ctx) => {
   let pagination = {
     total: 100,
     currentPage: ctx.request.query.page ? ctx.request.query.page++ : 1,
-    lastPage: 10,
+    lastPage: 20,
   };
 
   let ratingDetails = {
-    reviews: {
-      data,
-      pagination,
-    },
-    aggregrate: {
-      totalReviews: 100,
-      avgRating: 3,
-      rating: [
-        {
-          rating: 5,
-          review: 50,
-        },
-        {
-          rating: 4,
-          review: 20,
-        },
-        {
-          rating: 3,
-          review: 10,
-        },
-        {
-          rating: 2,
-          review: 5,
-        },
-        {
-          rating: 1,
-          review: 15,
-        },
-      ],
-    },
+    data,
+    pagination,
   };
   ctx.body = ratingDetails;
 };
+export const getProductRating = async (ctx) => {
+  let ratingDetails = {
+    totalReviews: 100,
+    avgRating: 3,
+    rating: [
+      {
+        rating: 5,
+        review: 50,
+      },
+      {
+        rating: 4,
+        review: 20,
+      },
+      {
+        rating: 3,
+        review: 10,
+      },
+      {
+        rating: 2,
+        review: 5,
+      },
+      {
+        rating: 1,
+        review: 15,
+      },
+    ],
+  };
+  ctx.body = ratingDetails;
+};
+
 export const filterConfig = async (ctx) => {
   let sortByFilterList = [];
   let brands = [];
