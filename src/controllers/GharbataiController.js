@@ -1,9 +1,18 @@
 import Joi from "@hapi/joi";
-import { format, parseISO } from "date-fns";
-import { logger } from "../logs/log";
+import {
+  format,
+  parseISO
+} from "date-fns";
+import {
+  logger
+} from "../logs/log";
 
-import { User } from "../models/User";
-import { Note } from "../models/Note";
+import {
+  User
+} from "../models/User";
+import {
+  Note
+} from "../models/Note";
 import faker from "faker";
 import path from "path";
 const fs = require("fs");
@@ -116,12 +125,10 @@ export const getProductDetail = async (ctx) => {
     description: faker.lorem.paragraphs(),
     content: faker.lorem.paragraphs(),
     videos: [
-      "https://www.youtube.com/watch?v=_O4zqE-jZkA",
-      "https://www.youtube.com/watch?v=0te6noMKffA",
-      "https://www.youtube.com/watch?v=NxSDNogkKX0&t=52s",
-      "https://www.youtube.com/watch?v=rj73lCWeZQw",
-      "https://www.youtube.com/watch?v=AtoZw7o2kRo",
-      "https://www.youtube.com/watch?v=96VSX9bZa6c",
+      "https://www.youtube.com/embed/ycZshUhdukI",
+      "https://www.youtube.com/embed/ycZshUhdukI",
+      "https://www.youtube.com/embed/ycZshUhdukI"
+
     ],
     reviewCount: faker.random.number({
       min: 10,
@@ -129,8 +136,16 @@ export const getProductDetail = async (ctx) => {
     }),
     attribute: {
       brand: faker.company.companyName(),
+      colors: [
+        faker.commerce.color(),
+        faker.commerce.color(),
+        faker.commerce.color(),
+        faker.commerce.color()
+      ],
+
     },
     isOnStock: faker.random.boolean(),
+
   };
   ctx.body = product;
 };
@@ -163,8 +178,7 @@ export const getProductReview = async (ctx) => {
     aggregrate: {
       totalReviews: 100,
       avgRating: 3,
-      rating: [
-        {
+      rating: [{
           rating: 5,
           review: 50,
         },
@@ -253,7 +267,10 @@ export const deals = async (ctx) => {
     content.push({
       id: faker.random.uuid(),
       image: baseUrl + faker.random.arrayElement(productImages),
-      title: "Get" + faker.random.number({ min: 10, max: 50 }) + "per off",
+      title: "Get" + faker.random.number({
+        min: 10,
+        max: 50
+      }) + "per off",
       deadline: faker.date.future(),
       referral: faker.internet.url(),
     });
@@ -272,7 +289,10 @@ export const specialEvents = async (ctx) => {
     content.push({
       id: faker.random.uuid(),
       image: baseUrl + faker.random.arrayElement(productImages),
-      title: "Get" + faker.random.number({ min: 10, max: 50 }) + "per off",
+      title: "Get" + faker.random.number({
+        min: 10,
+        max: 50
+      }) + "per off",
       referral: faker.internet.url(),
     });
   }
@@ -297,8 +317,7 @@ export const categoryGallery = async (ctx) => {
 };
 
 export const availablelocations = async (ctx) => {
-  ctx.body = [
-    {
+  ctx.body = [{
       id: faker.random.uuid(),
       name: "Kathmandu",
     },
