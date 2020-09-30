@@ -15,6 +15,7 @@ import {
   cartItemDetails,
   getProductDetail,
   getProductReview,
+  getProductRating,
 } from "../controllers/GharbataiController";
 import { production } from "knexfile";
 
@@ -27,6 +28,7 @@ router.get(`${baseUrl}/products`, products);
 router.get(`${baseUrl}/products/:id`, getProductDetail);
 router.get(`${baseUrl}/products/:id/review`, getProductReview);
 router.post(`${baseUrl}/products/:id/review`, getProductReview);
+router.get(`${baseUrl}/products/:id/rating`, getProductRating);
 
 //ROUTE ON TOP HAS MORE PRIORITY.
 router.get(`${baseUrl}/categories`, categories);
