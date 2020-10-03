@@ -1,22 +1,13 @@
 import Joi from "@hapi/joi";
-import {
-  format,
-  parseISO
-} from "date-fns";
-import {
-  logger
-} from "../logs/log";
+import { format, parseISO } from "date-fns";
+import { logger } from "../logs/log";
 
-import {
-  User
-} from "../models/User";
-import {
-  Note
-} from "../models/Note";
+import { User } from "../models/User";
+import { Note } from "../models/Note";
 import faker from "faker";
 import path from "path";
 const fs = require("fs");
-const baseUrl = "http://127.0.0.1:3000/assets/";
+const baseUrl = "http://192.168.0.105:3000/assets/";
 const assetFolder = path.join(__dirname, "../public/assets");
 let productImages = fs.readdirSync(assetFolder);
 
@@ -97,6 +88,8 @@ export const products = async (ctx) => {
 
 export const getProductDetail = async (ctx) => {
   let images = [];
+  let categoryAncestor = getCategoryAncestor();
+
   for (let i = 0; i < 7; i++) {
     images.push({
       id: faker.random.uuid(),
@@ -127,8 +120,7 @@ export const getProductDetail = async (ctx) => {
     videos: [
       "https://www.youtube.com/embed/ycZshUhdukI",
       "https://www.youtube.com/embed/ycZshUhdukI",
-      "https://www.youtube.com/embed/ycZshUhdukI"
-
+      "https://www.youtube.com/embed/ycZshUhdukI",
     ],
     reviewCount: faker.random.number({
       min: 10,
@@ -140,12 +132,11 @@ export const getProductDetail = async (ctx) => {
         faker.commerce.color(),
         faker.commerce.color(),
         faker.commerce.color(),
-        faker.commerce.color()
+        faker.commerce.color(),
       ],
-
     },
     isOnStock: faker.random.boolean(),
-
+    categoryAncestor,
   };
   ctx.body = product;
 };
@@ -180,7 +171,8 @@ export const getProductRating = async (ctx) => {
   let ratingDetails = {
     totalReviews: 100,
     avgRating: 3,
-    rating: [{
+    rating: [
+      {
         rating: 5,
         review: 50,
       },
@@ -210,8 +202,7 @@ export const filterConfig = async (ctx) => {
   let brands = [];
   ctx.body = [];
 };
-
-export const ansestorCategory = async (ctx) => {
+function getCategoryAncestor() {
   let content = [];
   for (let i = 0; i < 4; i++) {
     let department = faker.commerce.department();
@@ -220,10 +211,16 @@ export const ansestorCategory = async (ctx) => {
       label: department,
     });
   }
+
   content.push({
     id: faker.random.uuid(),
     label: faker.commerce.department(),
   });
+
+  return content;
+}
+export const ansestorCategory = async (ctx) => {
+  let content = getCategoryAncestor();
   ctx.body = content;
 };
 
@@ -269,10 +266,13 @@ export const deals = async (ctx) => {
     content.push({
       id: faker.random.uuid(),
       image: baseUrl + faker.random.arrayElement(productImages),
-      title: "Get" + faker.random.number({
-        min: 10,
-        max: 50
-      }) + "per off",
+      title:
+        "Get" +
+        faker.random.number({
+          min: 10,
+          max: 50,
+        }) +
+        "per off",
       deadline: faker.date.future(),
       referral: faker.internet.url(),
     });
@@ -291,10 +291,13 @@ export const specialEvents = async (ctx) => {
     content.push({
       id: faker.random.uuid(),
       image: baseUrl + faker.random.arrayElement(productImages),
-      title: "Get" + faker.random.number({
-        min: 10,
-        max: 50
-      }) + "per off",
+      title:
+        "Get" +
+        faker.random.number({
+          min: 10,
+          max: 50,
+        }) +
+        "per off",
       referral: faker.internet.url(),
     });
   }
@@ -319,7 +322,8 @@ export const categoryGallery = async (ctx) => {
 };
 
 export const availablelocations = async (ctx) => {
-  ctx.body = [{
+  ctx.body = [
+    {
       id: faker.random.uuid(),
       name: "Kathmandu",
     },
