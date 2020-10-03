@@ -156,6 +156,7 @@ export const getProductReview = async (ctx) => {
     data.push({
       id: faker.random.uuid(),
       name: faker.name.firstName() + " " + faker.name.lastName(),
+      date: faker.date.past(),
       image: baseUrl + faker.random.arrayElement(productImages),
       rating: faker.random.number({
         min: 1,
@@ -260,6 +261,17 @@ export const brands = async (ctx) => {
 
 export const deals = async (ctx) => {
   let content = [];
+  let images = [
+    "deal-one.jpg",
+    "deal-two.jpg",
+    "deal-three.jpg",
+    "deal-four.jpg",
+    "deal-five.jpg",
+    "deal-six.jpg"
+
+
+
+  ]
   let loop = faker.random.number({
     min: 5,
     max: 10,
@@ -268,7 +280,7 @@ export const deals = async (ctx) => {
   for (let i = 0; i < loop; i++) {
     content.push({
       id: faker.random.uuid(),
-      image: baseUrl + faker.random.arrayElement(productImages),
+      image: baseUrl + faker.random.arrayElement(images),
       title: "Get" + faker.random.number({
         min: 10,
         max: 50
@@ -282,6 +294,13 @@ export const deals = async (ctx) => {
 
 export const specialEvents = async (ctx) => {
   let content = [];
+  let images = [
+    "event-one.jpg",
+    "event-two.jpg",
+    "event-three.jpg",
+    "event-four.jpg"
+
+  ]
   let loop = faker.random.number({
     min: 5,
     max: 10,
@@ -290,7 +309,7 @@ export const specialEvents = async (ctx) => {
   for (let i = 0; i < loop; i++) {
     content.push({
       id: faker.random.uuid(),
-      image: baseUrl + faker.random.arrayElement(productImages),
+      image: baseUrl + faker.random.arrayElement(images),
       title: "Get" + faker.random.number({
         min: 10,
         max: 50
