@@ -97,6 +97,8 @@ export const products = async (ctx) => {
 
 export const getProductDetail = async (ctx) => {
   let images = [];
+  let categoryAncestor = getCategoryAncestor();
+
   for (let i = 0; i < 7; i++) {
     images.push({
       id: faker.random.uuid(),
@@ -127,8 +129,7 @@ export const getProductDetail = async (ctx) => {
     videos: [
       "https://www.youtube.com/embed/ycZshUhdukI",
       "https://www.youtube.com/embed/ycZshUhdukI",
-      "https://www.youtube.com/embed/ycZshUhdukI"
-
+      "https://www.youtube.com/embed/ycZshUhdukI",
     ],
     reviewCount: faker.random.number({
       min: 10,
@@ -140,12 +141,11 @@ export const getProductDetail = async (ctx) => {
         faker.commerce.color(),
         faker.commerce.color(),
         faker.commerce.color(),
-        faker.commerce.color()
+        faker.commerce.color(),
       ],
-
     },
     isOnStock: faker.random.boolean(),
-
+    categoryAncestor,
   };
   ctx.body = product;
 };
@@ -212,7 +212,7 @@ export const filterConfig = async (ctx) => {
   ctx.body = [];
 };
 
-export const ansestorCategory = async (ctx) => {
+function getCategoryAncestor() {
   let content = [];
   for (let i = 0; i < 4; i++) {
     let department = faker.commerce.department();
@@ -221,10 +221,16 @@ export const ansestorCategory = async (ctx) => {
       label: department,
     });
   }
+
   content.push({
     id: faker.random.uuid(),
     label: faker.commerce.department(),
   });
+
+  return content;
+}
+export const ansestorCategory = async (ctx) => {
+  let content = getCategoryAncestor();
   ctx.body = content;
 };
 
