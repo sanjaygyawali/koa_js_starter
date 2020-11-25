@@ -11,12 +11,16 @@ import {
   checkPasswordResetToken,
   reset,
   privateArea,
+  getMyAuthInfo,
 } from "../controllers/user-action-controller";
 
 export const router = new Router();
 const jwtMiddleware = jwt({ secret: process.env.JWT_SECRET });
 
 const baseUrl = "/api/v1";
+
+router.post(`/user/login`, authenticate);
+router.get(`/user/me`, getMyAuthInfo);
 
 router.post(`${baseUrl}/user/signup`, signup);
 router.post(`${baseUrl}/user/authenticate`, authenticate);

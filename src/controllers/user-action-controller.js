@@ -132,6 +132,17 @@ export const signup = async (ctx) => {
     ctx.throw(400, { error: { code: 400, message: "INVALID_DATA" } });
   }
 };
+const username = "sanjay";
+const password = "1234567890";
+const baseUrl = "http://localhost:3000/assets/";
+// const assetFolder = path.join(__dirname, "../public/assets");
+const mockUserData = {
+  fullname: "Sanjay Gyawali",
+  username: "sanjay",
+  email: "isanjay48@gmail.com",
+  phone: "9844776371",
+  image: baseUrl + "240_F_185089663_87mLybPDYom0JKTbefhdSjHFhdIm0Qqy.jpg",
+};
 
 export const authenticate = async (ctx) => {
   const request = ctx.request.body;
@@ -141,31 +152,31 @@ export const authenticate = async (ctx) => {
   }
 
   // Let's find that user
-  const [userData] = await db("users")
-    .where({
-      username: request.username,
-    })
-    .select("id", "token", "username", "email", "password", "isAdmin");
-  if (!userData) {
-    ctx.throw(401, { error: { code: 400, message: "INVALID_CREDENTIALS" } });
-  }
+  // const [userData] = await db("users")
+  //   .where({
+  //     username: request.username,
+  //   })
+  //   .select("id", "token", "username", "email", "password", "isAdmin");
+  // if (!userData) {
+  //   ctx.throw(401, { error: { code: 400, message: "INVALID_CREDENTIALS" } });
+  // }
 
   // Now let's check the password
-  try {
-    const correct = await bcrypt.compare(request.password, userData.password);
-    if (!correct) {
-      ctx.throw(401, { error: { code: 400, message: "INVALID_CREDENTIALS" } });
-    }
-  } catch (error) {
-    ctx.throw(400, { error: { code: 400, message: "INVALID_DATA" } });
+  // try {
+  const correct = request.password == password;
+  if (!correct) {
+    ctx.throw(401, { error: { code: 401, message: "INVALID_CREDENTIALS" } });
   }
+  // } catch (error) {
+  // ctx.throw(400, { error: { code: 400, message: "INVALID_DATAsss" } });
+  // }
 
   // Let's get rid of that password now for security reasons
-  delete userData.password;
+  // delete userData.password;
 
   // Generate the refreshToken data
   const refreshTokenData = {
-    username: userData.username,
+    username: mockUserData.username,
     refreshToken: new rand(/[a-zA-Z0-9_-]{64,64}/).gen(),
     info: `${ctx.userAgent.os} ${ctx.userAgent.platform} ${ctx.userAgent.browser}`,
     ipAddress: ctx.request.ip,
@@ -174,28 +185,39 @@ export const authenticate = async (ctx) => {
   };
 
   // Insert the refresh data into the db
-  try {
-    await db("refresh_tokens").insert(refreshTokenData);
-  } catch (error) {
-    ctx.throw(400, { error: { code: 400, message: "INVALID_DATA" } });
-  }
+  // try {
+  //   await db("refresh_tokens").insert(refreshTokenData);
+  // } catch (error) {
+  //   ctx.throw(400, { error: { code: 400, message: "INVALID_DATA" } });
+  // }
 
   // Update their login count
-  try {
-    await db("users").increment("loginCount").where({ id: userData.id });
-  } catch (error) {
-    ctx.throw(400, { error: { code: 400, message: "INVALID_DATA" } });
-  }
+  // try {
+  //   await db("users").increment("loginCount").where({ id: userData.id });
+  // } catch (error) {
+  //   ctx.throw(400, { error: { code: 400, message: "INVALID_DATA" } });
+  // }
 
   // Ok, they've made it, send them their jsonwebtoken with their data, accessToken and refreshToken
-  const token = jsonwebtoken.sign({ data: userData }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_ACCESS_TOKEN_EXP,
-  });
-  ctx.body = {
-    data: {
-      accessToken: token,
-      refreshToken: refreshTokenData.refreshToken,
+  const token = jsonwebtoken.sign(
+    { data: mockUserData },
+    "fasdfasfasdfasdfasdffsadfasd",
+    {
+      expiresIn: 36000,
     },
+  );
+
+  ctx.body = {
+    accessToken: token,
+    refreshToken: refreshTokenData.refreshToken,
+    user: mockUserData,
+    remember: true,
+  };
+};
+
+export const getMyAuthInfo = async (ctx) => {
+  ctx.body = {
+    ...mockUserData,
   };
 };
 

@@ -16,6 +16,14 @@ import {
   getProductDetail,
   getProductReview,
   getProductRating,
+  applyPromotionCode,
+  revokePromotionCode,
+  getCity,
+  search,
+  getPageConfiguration,
+  getNotifications,
+  markNotificationAsRead,
+  deleteNotification,
 } from "../controllers/GharbataiController";
 import { production } from "knexfile";
 
@@ -46,6 +54,16 @@ router.get(`${baseUrl}/cartItemDetails`, cartItemDetails);
 
 router.get(`${baseUrl}/cart/items`, cartItemDetails);
 
+router.post(`${baseUrl}/promotions/apply`, applyPromotionCode);
+router.post(`${baseUrl}/promotions/revoke`, revokePromotionCode);
+
+router.get(`${baseUrl}/cities/:id`, getCity);
+
+router.get(`${baseUrl}/search`, search);
+router.get(`${baseUrl}/index-page-config`, getPageConfiguration);
+router.get(`${baseUrl}/notifications`, getNotifications);
+router.put(`${baseUrl}/notifications/:id/read`, markNotificationAsRead);
+router.delete(`${baseUrl}/notifications/:id`, deleteNotification);
 // router.post(`${baseUrl}/notes`, jwtMiddleware, create);
 // router.get(`${baseUrl}/notes/:id`, jwtMiddleware, show);
 // router.put(`${baseUrl}/notes/:id`, jwtMiddleware, update);
