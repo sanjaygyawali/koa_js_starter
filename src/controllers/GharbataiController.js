@@ -1,12 +1,23 @@
 import Joi from "@hapi/joi";
-import { format, parseISO } from "date-fns";
-import { logger } from "../logs/log";
+import {
+  format,
+  parseISO
+} from "date-fns";
+import {
+  logger
+} from "../logs/log";
 
-import { User } from "../models/User";
-import { Note } from "../models/Note";
+import {
+  User
+} from "../models/User";
+import {
+  Note
+} from "../models/Note";
 import faker from "faker";
 import path from "path";
-import { cities } from "./gharbatai";
+import {
+  cities
+} from "./gharbatai";
 
 const fs = require("fs");
 const baseUrl = "http://localhost:3000/assets/";
@@ -116,14 +127,12 @@ export const getProductDetail = async (ctx) => {
     images: images,
     isOnWishList: faker.random.boolean(),
 
-    productDetail: [
-      {
+    productDetail: [{
         type: "product-rating",
         data: {
           totalReviews: 100,
           avgRating: 3,
-          rating: [
-            {
+          rating: [{
               rating: 5,
               review: 50,
             },
@@ -201,8 +210,7 @@ export const getProductReview = async (ctx) => {
         max: 5,
       }),
       review: faker.lorem.paragraph(),
-      replies: [
-        {
+      replies: [{
           id: faker.random.uuid(),
           date: "2020-01-01",
           name: faker.name.firstName() + " " + faker.name.lastName(),
@@ -249,8 +257,7 @@ export const getProductRating = async (ctx) => {
   let ratingDetails = {
     totalReviews: 100,
     avgRating: 3,
-    rating: [
-      {
+    rating: [{
         rating: 5,
         review: 50,
       },
@@ -280,6 +287,7 @@ export const filterConfig = async (ctx) => {
   let brands = [];
   ctx.body = [];
 };
+
 function getCategoryAncestor() {
   let content = [];
   for (let i = 0; i < 4; i++) {
@@ -348,8 +356,7 @@ function getDeal(ctx) {
     data.push({
       id: faker.random.uuid(),
       image: baseUrl + faker.random.arrayElement(productImages),
-      title:
-        "Get" +
+      title: "Get" +
         faker.random.number({
           min: 10,
           max: 50,
@@ -386,8 +393,7 @@ function getSpecialEvents(ctx) {
     data.push({
       id: faker.random.uuid(),
       image: baseUrl + faker.random.arrayElement(productImages),
-      title:
-        "Get" +
+      title: "Get" +
         faker.random.number({
           min: 10,
           max: 50,
@@ -431,8 +437,7 @@ function getCategoryGallery(ctx) {
 }
 
 export const availablelocations = async (ctx) => {
-  ctx.body = [
-    {
+  ctx.body = [{
       id: faker.random.uuid(),
       name: "Kathmandu",
     },
@@ -546,8 +551,7 @@ export const getCity = async (ctx) => {
 export const getDistricts = async (ctx) => {
   let result = [];
 
-  ctx.body = [
-    {
+  ctx.body = [{
       id: 28,
       name: "Kathmandu",
     },
@@ -589,20 +593,17 @@ export const search = async (ctx) => {
 export const getPageConfiguration = async (ctx) => {
   let data = [];
 
-  let slider = [
-    {
+  let slider = [{
       id: 1,
       title: "Something",
       link: "product/14e7aad5-6e5a-4cfd-9850-8e7343a35da4",
-      img:
-        "https://image.freepik.com/free-photo/front-view-online-shopping-concept_23-2148625711.jpg",
+      img: "https://image.freepik.com/free-photo/front-view-online-shopping-concept_23-2148625711.jpg",
     },
     {
       id: 2,
       title: "Something",
       link: "product/14e7aad5-6e5a-4cfd-9850-8e7343a35da4",
-      img:
-        "https://image.freepik.com/free-photo/girl-holds-fashion-shopping-bag-beauty_1150-13673.jpg",
+      img: "https://image.freepik.com/free-photo/girl-holds-fashion-shopping-bag-beauty_1150-13673.jpg",
     },
   ];
 
@@ -734,14 +735,11 @@ export const getPageConfiguration = async (ctx) => {
 export const getNotifications = async (ctx) => {
   // ctx.body = ctx.request.query.page;
   // return;
-  let notification = [
-    {
+  let notification = [{
       id: faker.random.uuid(),
       title: "Lorem ipsum",
-      image:
-        "https://t4.ftcdn.net/jpg/02/66/65/73/240_F_266657349_5QMR6FiWIk0VAZHojNd7cdClDR5V6Ph2.jpg",
-      description:
-        " Secondary line text. Lorem ipsum dolor sit amet consectetur adipiscit elit.",
+      image: "https://t4.ftcdn.net/jpg/02/66/65/73/240_F_266657349_5QMR6FiWIk0VAZHojNd7cdClDR5V6Ph2.jpg",
+      description: " Secondary line text. Lorem ipsum dolor sit amet consectetur adipiscit elit.",
       date: "21 Jul 2020, Tuesday",
       status: "1",
       link: "",
@@ -749,10 +747,8 @@ export const getNotifications = async (ctx) => {
     {
       id: faker.random.uuid(),
       title: "Lorem ipsum",
-      image:
-        "https://t4.ftcdn.net/jpg/02/66/65/73/240_F_266657349_5QMR6FiWIk0VAZHojNd7cdClDR5V6Ph2.jpg",
-      description:
-        " Secondary line text. Lorem ipsum dolor sit amet consectetur adipiscit elit.",
+      image: "https://t4.ftcdn.net/jpg/02/66/65/73/240_F_266657349_5QMR6FiWIk0VAZHojNd7cdClDR5V6Ph2.jpg",
+      description: " Secondary line text. Lorem ipsum dolor sit amet consectetur adipiscit elit.",
       date: "21 Jul 2020, Tuesday",
       status: "1",
       link: "",
@@ -761,8 +757,7 @@ export const getNotifications = async (ctx) => {
       id: faker.random.uuid(),
       title: "Lorem ipsum",
       image: "",
-      description:
-        " Secondary line text. Lorem ipsum dolor sit amet consectetur adipiscit elit.",
+      description: " Secondary line text. Lorem ipsum dolor sit amet consectetur adipiscit elit.",
       date: "21 Jul 2020, Tuesday",
       status: "0",
       link: "/product/938f010c-ded0-438d-8fe5-77230298be09",
@@ -781,11 +776,15 @@ export const getNotifications = async (ctx) => {
 };
 
 export const markNotificationAsRead = async (ctx) => {
-  ctx.body = { success: true };
+  ctx.body = {
+    success: true
+  };
 };
 
 export const deleteNotification = async (ctx) => {
-  ctx.body = { success: true };
+  ctx.body = {
+    success: true
+  };
 };
 
 export const func = async (ctx) => {};
