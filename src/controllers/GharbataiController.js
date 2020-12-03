@@ -597,13 +597,13 @@ export const getPageConfiguration = async (ctx) => {
       id: 1,
       title: "Something",
       link: "product/14e7aad5-6e5a-4cfd-9850-8e7343a35da4",
-      img: "https://image.freepik.com/free-photo/front-view-online-shopping-concept_23-2148625711.jpg",
+      img: "http://localhost:3000/assets/banner-one.png",
     },
     {
       id: 2,
       title: "Something",
       link: "product/14e7aad5-6e5a-4cfd-9850-8e7343a35da4",
-      img: "https://image.freepik.com/free-photo/girl-holds-fashion-shopping-bag-beauty_1150-13673.jpg",
+      img: "http://localhost:3000/assets/banner-three.png",
     },
   ];
 
