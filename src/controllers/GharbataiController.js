@@ -173,15 +173,146 @@ export const getProductDetail = async (ctx) => {
       min: 10,
       max: 100,
     }),
-    attribute: {
-      brand: faker.company.companyName(),
-      colors: [
-        faker.commerce.color(),
-        faker.commerce.color(),
-        faker.commerce.color(),
-        faker.commerce.color(),
-      ],
-    },
+    colors: [
+      {
+        id: faker.random.uuid(),
+        title: faker.commerce.color(),
+      },
+      {
+        id: faker.random.uuid(),
+        title: faker.commerce.color(),
+      },
+      {
+        id: faker.random.uuid(),
+        title: faker.commerce.color(),
+      },
+      {
+        id: faker.random.uuid(),
+        title: faker.commerce.color(),
+      },
+    ],
+    catalogueCombination: [
+      {
+        types: {
+          Color: { id: "red", title: "red" },
+          Size: { id: "L", title: "L" },
+          MaterialType: { id: "cotton", title: "cotton" },
+        },
+        regularPrice: 2000,
+        specialPrice: 1500,
+      },
+      {
+        types: {
+          Color: { id: "red", title: "red" },
+          Size: { id: "XL", title: "XL" },
+          MaterialType: { id: "Xcotton", title: "Xcotton" },
+        },
+        regularPrice: 2000,
+        specialPrice: 1500,
+      },
+      {
+        types: {
+          Color: { id: "blue", title: "blue" },
+          Size: { id: "XL", title: "XL" },
+          MaterialType: { id: "nylon", title: "nylon" },
+        },
+        regularPrice: 2001,
+        specialPrice: 1501,
+      },
+      {
+        types: {
+          Color: { id: "green", title: "green" },
+          Size: { id: "XXL", title: "XXL" },
+          MaterialType: { id: "soft-fabric", title: "soft-fabric" },
+        },
+        regularPrice: 2002,
+        specialPrice: 1502,
+      },
+      {
+        types: {
+          Color: { id: "black", title: "black" },
+          Size: { id: "XXXL", title: "XXXL" },
+          MaterialType: { id: "hard-fabric", title: "hard-fabric" },
+        },
+        regularPrice: 1502,
+      },
+    ],
+    attributes: [
+      {
+        name: "Color",
+        type: "product-attribute-color",
+        colors: [
+          {
+            id: "red",
+            title: "red",
+          },
+          {
+            id: "blue",
+            title: "blue",
+          },
+          {
+            id: "green",
+            title: "green",
+          },
+          {
+            id: "black",
+            title: "black",
+          },
+        ],
+      },
+      {
+        name: "Brand",
+        type: "product-attribute-brand",
+        brand: {
+          id: faker.random.uuid(),
+          name: faker.company.companyName(),
+        },
+      },
+      {
+        name: "Size",
+        type: "product-attribute-box",
+        items: [
+          {
+            id: "L",
+            title: "L",
+          },
+          {
+            id: "XL",
+            title: "XL",
+          },
+          {
+            id: "XXL",
+            title: "XXL",
+          },
+          {
+            id: "XXXL",
+            title: "XXXL",
+          },
+        ],
+      },
+      {
+        name: "MaterialType",
+        type: "product-attribute-box",
+        items: [
+          {
+            id: "cotton",
+            title: "cotton",
+          },
+          {
+            id: "nylon",
+            title: "nylon",
+          },
+          {
+            id: "soft-fabric",
+            title: "soft-fabric",
+          },
+          {
+            id: "hard-fabric",
+            title: "hard-fabric",
+          },
+        ],
+      },
+    ],
     isOnStock: faker.random.boolean(),
     categoryAncestor,
   };
@@ -245,6 +376,28 @@ export const getProductReview = async (ctx) => {
   };
   ctx.body = ratingDetails;
 };
+
+export const getProductFaq = async (ctx) => {
+  let data = [];
+  for (let i = 1; i < 5; i++) {
+    data.push({
+      question: faker.lorem.sentence(),
+      answer: faker.lorem.sentences(),
+    });
+  }
+  let pagination = {
+    total: 100,
+    currentPage: ctx.request.query.page ? ctx.request.query.page++ : 1,
+    lastPage: 20,
+  };
+
+  let ratingDetails = {
+    data,
+    pagination,
+  };
+  ctx.body = ratingDetails;
+};
+
 export const getProductRating = async (ctx) => {
   let ratingDetails = {
     totalReviews: 100,
