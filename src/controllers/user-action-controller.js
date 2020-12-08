@@ -142,6 +142,7 @@ const mockUserData = {
   email: "isanjay48@gmail.com",
   phone: "9844776371",
   image: baseUrl + "240_F_185089663_87mLybPDYom0JKTbefhdSjHFhdIm0Qqy.jpg",
+  unreadNotificationCount: 7,
 };
 
 export const authenticate = async (ctx) => {

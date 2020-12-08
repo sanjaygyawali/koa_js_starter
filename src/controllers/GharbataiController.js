@@ -109,6 +109,114 @@ function getProducts(ctx) {
   };
 }
 
+function prepareProductAttribute() {
+  return [{
+      name: "Color",
+      type: "product-attribute-color",
+      items: [{
+          enable: faker.random.boolean(),
+          id: "red",
+          title: "red",
+        },
+        {
+          enable: faker.random.boolean(),
+          id: "blue",
+          title: "blue",
+        },
+        {
+          enable: faker.random.boolean(),
+          id: "green",
+          title: "green",
+        },
+        {
+          enable: faker.random.boolean(),
+          id: "black",
+          title: "black",
+        },
+      ],
+    },
+    {
+      name: "Brand",
+      type: "product-attribute-brand",
+      brand: {
+        id: faker.random.uuid(),
+        name: faker.company.companyName(),
+      },
+    },
+    {
+      name: "Size",
+      type: "product-attribute-box",
+      items: [{
+          enable: faker.random.boolean(),
+          id: "L",
+          title: "L",
+        },
+        {
+          enable: faker.random.boolean(),
+          id: "XL",
+          title: "XL",
+        },
+        {
+          enable: faker.random.boolean(),
+          id: "XXL",
+          title: "XXL",
+        },
+        {
+          enable: faker.random.boolean(),
+          id: "XXXL",
+          title: "XXXL",
+        },
+      ],
+    },
+    {
+      name: "MaterialType",
+      type: "product-attribute-box",
+      items: [{
+          enable: faker.random.boolean(),
+          id: "cotton",
+          title: "cotton",
+        },
+        {
+          enable: faker.random.boolean(),
+          id: "nylon",
+          title: "nylon",
+        },
+        {
+          enable: faker.random.boolean(),
+          id: "soft-fabric",
+          title: "soft-fabric",
+        },
+        {
+          enable: faker.random.boolean(),
+          id: "hard-fabric",
+          title: "hard-fabric",
+        },
+      ],
+    },
+  ];
+}
+
+export const getSystemConfig = async (ctx) => {
+  let config = {
+    test: "test",
+  };
+  ctx.body = config;
+};
+
+export const getProductAttributes = async (ctx) => {
+  ctx.body = {
+    attributes: prepareProductAttribute(),
+    regularPrice: faker.random.number({
+      min: 1000,
+      max: 1500,
+    }),
+    specialPrice: faker.random.number({
+      min: 100,
+      max: 1000,
+    }),
+  };
+};
+
 export const getProductDetail = async (ctx) => {
   let images = [];
   let categoryAncestor = getCategoryAncestor();
@@ -126,7 +234,7 @@ export const getProductDetail = async (ctx) => {
     image: baseUrl + faker.random.arrayElement(productImages),
     images: images,
     isOnWishList: faker.random.boolean(),
-
+    cartCount: 6,
     productDetail: [{
         type: "product-rating",
         data: {
@@ -171,6 +279,39 @@ export const getProductDetail = async (ctx) => {
       min: 100,
       max: 1000,
     }),
+    productInfoBundle: [{
+        type: "article-attribute",
+        title: "Description",
+        content: {
+          data: "<span style='font-size: 1em;'>Check out the two different types of dropdowns in each of the 'Align' buttons.fasdfadfasdf</span><span style='font-size: 1em;'>fasdfaf</span></blockquote><pre><span style='font-size: 1em;'><a href='https://'>fasdf</a>fas</span></pre><pre><span style='font-size: 1em;'><br></span></pre><pre><span style='font-size: 1em;'>fasdfasdffasdfadsffasd string = var -- 12;</span></pre>",
+        },
+      },
+      {
+        type: "video-attribute",
+        title: "videos",
+        content: {
+          data: [{
+              id: "a313698f-267c-4110-90fd-8a8bc4d202e8",
+              url: "https://www.youtube.com/embed/ycZshUhdukI",
+            },
+            {
+              id: "a313698f-267c-4110-90fd-8a8bc4d202e8",
+              url: "https://www.youtube.com/embed/ycZshUhdukI",
+            },
+          ],
+        },
+      },
+      {
+        type: "customer-review",
+        title: "Customer Review",
+        content: {},
+      },
+      {
+        type: "product-faq",
+        title: "FAQ",
+        content: {},
+      },
+    ],
     description: faker.lorem.paragraphs(),
     content: faker.lorem.paragraphs(),
     videos: [
@@ -289,105 +430,7 @@ export const getProductDetail = async (ctx) => {
         regularPrice: 1502,
       },
     ],
-    attributes: [{
-        name: "Color",
-        type: "product-attribute-color",
-        colors: [{
-            id: "red",
-            title: "red",
-          },
-          {
-            id: "blue",
-            title: "blue",
-          },
-          {
-            id: "green",
-            title: "green",
-          },
-          {
-            id: "black",
-            title: "black",
-          },
-        ],
-      },
-      {
-        name: "Brand",
-        type: "product-attribute-brand",
-        brand: {
-          id: faker.random.uuid(),
-          name: faker.company.companyName(),
-        },
-      },
-      {
-        name: "Size",
-        type: "product-attribute-box",
-        items: [{
-            id: "XSS",
-            title: "XSS",
-          }, {
-            id: "XS",
-            title: "XS",
-          }, {
-            id: "S",
-            title: "S",
-          }, {
-            id: "M",
-            title: "M",
-          },
-          {
-            id: "L",
-            title: "L",
-          },
-          {
-            id: "XL",
-            title: "XL",
-          },
-          {
-            id: "XXL",
-            title: "XXL",
-          },
-          {
-            id: "XXXL",
-            title: "XXXL",
-          },
-          {
-            id: "a",
-            title: "L",
-          }, {
-            id: "b",
-            title: "XL",
-          }, {
-            id: "c",
-            title: "XXL",
-          }, {
-            id: "d",
-            title: "XXXL",
-          },
-
-        ],
-      },
-      {
-        name: "MaterialType",
-        type: "product-attribute-box",
-        items: [{
-            id: "cotton",
-            title: "cotton",
-          },
-          {
-            id: "nylon",
-            title: "nylon",
-          },
-          {
-            id: "soft-fabric",
-            title: "soft-fabric",
-          },
-          {
-            id: "hard-fabric",
-            title: "hard-fabric",
-          },
-        ],
-      },
-    ],
+    attributes: prepareProductAttribute(),
     isOnStock: faker.random.boolean(),
     categoryAncestor,
   };
@@ -996,13 +1039,13 @@ export const getNotifications = async (ctx) => {
 
 export const markNotificationAsRead = async (ctx) => {
   ctx.body = {
-    success: true
+    success: true,
   };
 };
 
 export const deleteNotification = async (ctx) => {
   ctx.body = {
-    success: true
+    success: true,
   };
 };
 
