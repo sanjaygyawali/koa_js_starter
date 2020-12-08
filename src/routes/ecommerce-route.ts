@@ -25,6 +25,8 @@ import {
   markNotificationAsRead,
   deleteNotification,
   getProductFaq,
+  getProductAttributes,
+  getSystemConfig,
 } from "../controllers/GharbataiController";
 import { production } from "knexfile";
 
@@ -39,6 +41,9 @@ router.get(`${baseUrl}/products/:id/review`, getProductReview);
 router.post(`${baseUrl}/products/:id/review`, getProductReview);
 router.get(`${baseUrl}/products/:id/rating`, getProductRating);
 router.get(`${baseUrl}/products/:id/faq`, getProductFaq);
+router.get(`${baseUrl}/products/:id/attributes`, getProductAttributes);
+
+router.get(`${baseUrl}/sys-config`, getSystemConfig);
 
 //ROUTE ON TOP HAS MORE PRIORITY.
 router.get(`${baseUrl}/categories`, categories);
