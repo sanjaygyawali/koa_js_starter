@@ -182,8 +182,7 @@ export const getProductDetail = async (ctx) => {
       min: 10,
       max: 100,
     }),
-    colors: [
-      {
+    colors: [{
         id: faker.random.uuid(),
         title: faker.commerce.color(),
       },
@@ -200,58 +199,100 @@ export const getProductDetail = async (ctx) => {
         title: faker.commerce.color(),
       },
     ],
-    catalogueCombination: [
-      {
+    catalogueCombination: [{
         types: {
-          Color: { id: "red", title: "red" },
-          Size: { id: "L", title: "L" },
-          MaterialType: { id: "cotton", title: "cotton" },
+          Color: {
+            id: "red",
+            title: "red"
+          },
+          Size: {
+            id: "L",
+            title: "L"
+          },
+          MaterialType: {
+            id: "cotton",
+            title: "cotton"
+          },
         },
         regularPrice: 2000,
         specialPrice: 1500,
       },
       {
         types: {
-          Color: { id: "red", title: "red" },
-          Size: { id: "XL", title: "XL" },
-          MaterialType: { id: "Xcotton", title: "Xcotton" },
+          Color: {
+            id: "red",
+            title: "red"
+          },
+          Size: {
+            id: "XL",
+            title: "XL"
+          },
+          MaterialType: {
+            id: "Xcotton",
+            title: "Xcotton"
+          },
         },
         regularPrice: 2000,
         specialPrice: 1500,
       },
       {
         types: {
-          Color: { id: "blue", title: "blue" },
-          Size: { id: "XL", title: "XL" },
-          MaterialType: { id: "nylon", title: "nylon" },
+          Color: {
+            id: "blue",
+            title: "blue"
+          },
+          Size: {
+            id: "XL",
+            title: "XL"
+          },
+          MaterialType: {
+            id: "nylon",
+            title: "nylon"
+          },
         },
         regularPrice: 2001,
         specialPrice: 1501,
       },
       {
         types: {
-          Color: { id: "green", title: "green" },
-          Size: { id: "XXL", title: "XXL" },
-          MaterialType: { id: "soft-fabric", title: "soft-fabric" },
+          Color: {
+            id: "green",
+            title: "green"
+          },
+          Size: {
+            id: "XXL",
+            title: "XXL"
+          },
+          MaterialType: {
+            id: "soft-fabric",
+            title: "soft-fabric"
+          },
         },
         regularPrice: 2002,
         specialPrice: 1502,
       },
       {
         types: {
-          Color: { id: "black", title: "black" },
-          Size: { id: "XXXL", title: "XXXL" },
-          MaterialType: { id: "hard-fabric", title: "hard-fabric" },
+          Color: {
+            id: "black",
+            title: "black"
+          },
+          Size: {
+            id: "XXXL",
+            title: "XXXL"
+          },
+          MaterialType: {
+            id: "hard-fabric",
+            title: "hard-fabric"
+          },
         },
         regularPrice: 1502,
       },
     ],
-    attributes: [
-      {
+    attributes: [{
         name: "Color",
         type: "product-attribute-color",
-        colors: [
-          {
+        colors: [{
             id: "red",
             title: "red",
           },
@@ -280,7 +321,19 @@ export const getProductDetail = async (ctx) => {
       {
         name: "Size",
         type: "product-attribute-box",
-        items: [
+        items: [{
+            id: "XSS",
+            title: "XSS",
+          }, {
+            id: "XS",
+            title: "XS",
+          }, {
+            id: "S",
+            title: "S",
+          }, {
+            id: "M",
+            title: "M",
+          },
           {
             id: "L",
             title: "L",
@@ -297,13 +350,26 @@ export const getProductDetail = async (ctx) => {
             id: "XXXL",
             title: "XXXL",
           },
+          {
+            id: "a",
+            title: "L",
+          }, {
+            id: "b",
+            title: "XL",
+          }, {
+            id: "c",
+            title: "XXL",
+          }, {
+            id: "d",
+            title: "XXXL",
+          },
+
         ],
       },
       {
         name: "MaterialType",
         type: "product-attribute-box",
-        items: [
-          {
+        items: [{
             id: "cotton",
             title: "cotton",
           },
