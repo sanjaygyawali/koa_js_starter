@@ -126,37 +126,53 @@ function prepareProductAttribute() {
         },
       ],
     },
+    // {
+    //   name: "Brand",
+    //   type: "product-attribute-brand",
+    //   brand: {
+    //     id: faker.random.uuid(),
+    //     name: faker.company.companyName(),
+    //   },
+    // },
+    // {
+    //   name: "Size",
+    //   type: "product-attribute-box",
+    //   items: [
+    //     {
+    //       enable: faker.random.boolean(),
+    //       id: "L",
+    //       title: "L",
+    //     },
+    //     {
+    //       enable: faker.random.boolean(),
+    //       id: "XL",
+    //       title: "XL",
+    //     },
+    //     {
+    //       enable: faker.random.boolean(),
+    //       id: "XXL",
+    //       title: "XXL",
+    //     },
+    //     {
+    //       enable: faker.random.boolean(),
+    //       id: "XXXL",
+    //       title: "XXXL",
+    //     },
+    //   ],
+    // },
     {
       name: "Brand",
-      type: "product-attribute-brand",
-      brand: {
-        id: faker.random.uuid(),
-        name: faker.company.companyName(),
-      },
-    },
-    {
-      name: "Size",
       type: "product-attribute-box",
       items: [
         {
           enable: faker.random.boolean(),
-          id: "L",
-          title: "L",
+          id: "APPLE",
+          title: "APPLE",
         },
         {
           enable: faker.random.boolean(),
-          id: "XL",
-          title: "XL",
-        },
-        {
-          enable: faker.random.boolean(),
-          id: "XXL",
-          title: "XXL",
-        },
-        {
-          enable: faker.random.boolean(),
-          id: "XXXL",
-          title: "XXXL",
+          id: "BALL",
+          title: "BALL",
         },
       ],
     },
