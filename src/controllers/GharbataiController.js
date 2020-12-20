@@ -1,26 +1,16 @@
 import Joi from "@hapi/joi";
-import {
-  format,
-  parseISO
-} from "date-fns";
-import {
-  logger
-} from "../logs/log";
+import { format, parseISO } from "date-fns";
+import { logger } from "../logs/log";
 
-import {
-  User
-} from "../models/User";
-import {
-  Note
-} from "../models/Note";
+import { User } from "../models/User";
+import { Note } from "../models/Note";
 import faker from "faker";
 import path from "path";
-import {
-  cities
-} from "./gharbatai";
+import { cities } from "./gharbatai";
+import assetsURL from "../baseUrl";
 
 const fs = require("fs");
-const baseUrl = "http://localhost:3000/assets/";
+const baseUrl = assetsURL;
 const assetFolder = path.join(__dirname, "../public/assets");
 let productImages = fs.readdirSync(assetFolder);
 
@@ -45,9 +35,8 @@ function getCategories(ctx) {
     let department = faker.commerce.department();
     content.push({
       id: faker.random.uuid(),
-      tag: department,
       label: department,
-      parent_id: faker.random.uuid(),
+
       children: faker.random.number({
         min: 0,
         max: 20,
@@ -55,15 +44,15 @@ function getCategories(ctx) {
     });
   }
 
+  // let parent_id = "";
+  // if (ctx.params.id) {
+  //   parent_id = faker.random.uuid();
+  // }
+
   let categories = {
-    id: faker.random.uuid(),
-    tag: faker.commerce.department(),
-    label: faker.commerce.department(),
-    parent_id: faker.random.uuid(),
-    children: faker.random.number({
-      min: 0,
-      max: 20,
-    }),
+    id: ctx.params.id,
+    parent_id: ctx.params.id ? faker.random.uuid() : ctx.params.id,
+    children: content.length,
     categories: content,
   };
 
@@ -110,10 +99,12 @@ function getProducts(ctx) {
 }
 
 function prepareProductAttribute() {
-  return [{
+  return [
+    {
       name: "Color",
-      type: "product-attribute-color",
-      items: [{
+      componentType: "product-attribute-color",
+      items: [
+        {
           enable: faker.random.boolean(),
           id: "red",
           title: "red",
@@ -124,7 +115,7 @@ function prepareProductAttribute() {
           title: "blue",
         },
         {
-          enable: faker.random.boolean(),
+          enable: true,
           id: "green",
           title: "green",
         },
@@ -171,9 +162,10 @@ function prepareProductAttribute() {
     // },
     {
       name: "Brand",
-      type: "product-attribute-box",
-      items: [{
-          enable: faker.random.boolean(),
+      componentType: "product-attribute-box",
+      items: [
+        {
+          enable: true,
           id: "APPLE",
           title: "APPLE",
         },
@@ -186,9 +178,10 @@ function prepareProductAttribute() {
     },
     {
       name: "MaterialType",
-      type: "product-attribute-box",
-      items: [{
-          enable: faker.random.boolean(),
+      componentType: "product-attribute-box",
+      items: [
+        {
+          enable: true,
           id: "cotton",
           title: "cotton",
         },
@@ -247,16 +240,17 @@ export const getProductDetail = async (ctx) => {
     id: faker.random.uuid(),
     title: faker.commerce.productName(),
     isOnSale: faker.random.boolean(),
-    image: baseUrl + faker.random.arrayElement(productImages),
     images: images,
     isOnWishList: faker.random.boolean(),
-    cartCount: 6,
-    productDetail: [{
-        type: "product-rating",
+
+    productDetail: [
+      {
+        componentType: "product-rating",
         data: {
           totalReviews: 100,
           avgRating: 3,
-          rating: [{
+          rating: [
+            {
               rating: 5,
               review: 50,
             },
@@ -280,7 +274,7 @@ export const getProductDetail = async (ctx) => {
         },
       },
       {
-        type: "exchange-policy-list-item",
+        componentType: "exchange-policy-list-item",
         data: {
           days: 5,
           policyUrl: `/exchange-policy/${faker.random.uuid()}`,
@@ -295,18 +289,26 @@ export const getProductDetail = async (ctx) => {
       min: 100,
       max: 1000,
     }),
-    productInfoBundle: [{
-        type: "article-attribute",
+    defaultAttribute: {
+      Brand: "APPLE",
+      MaterialType: "nylon",
+      Color: "green",
+    },
+    productInfoBundle: [
+      {
+        componentType: "article-attribute",
         title: "Description",
         content: {
-          data: "<span style='font-size: 1em;'>Check out the two different types of dropdowns in each of the 'Align' buttons.fasdfadfasdf</span><span style='font-size: 1em;'>fasdfaf</span></blockquote><pre><span style='font-size: 1em;'><a href='https://'>fasdf</a>fas</span></pre><pre><span style='font-size: 1em;'><br></span></pre><pre><span style='font-size: 1em;'>fasdfasdffasdfadsffasd string = var -- 12;</span></pre>",
+          data:
+            "<span style='font-size: 1em;'>Check out the two different types of dropdowns in each of the 'Align' buttons.fasdfadfasdf</span><span style='font-size: 1em;'>fasdfaf</span></blockquote><pre><span style='font-size: 1em;'><a href='https://'>fasdf</a>fas</span></pre><pre><span style='font-size: 1em;'><br></span></pre><pre><span style='font-size: 1em;'>fasdfasdffasdfadsffasd string = var -- 12;</span></pre>",
         },
       },
       {
-        type: "video-attribute",
+        componentType: "video-attribute",
         title: "videos",
         content: {
-          data: [{
+          data: [
+            {
               id: "a313698f-267c-4110-90fd-8a8bc4d202e8",
               url: "https://www.youtube.com/embed/ycZshUhdukI",
             },
@@ -318,134 +320,17 @@ export const getProductDetail = async (ctx) => {
         },
       },
       {
-        type: "customer-review",
+        componentType: "customer-review",
         title: "Customer Review",
         content: {},
       },
       {
-        type: "product-faq",
+        componentType: "product-faq",
         title: "FAQ",
         content: {},
       },
     ],
-    description: faker.lorem.paragraphs(),
-    content: faker.lorem.paragraphs(),
-    videos: [
-      "https://www.youtube.com/embed/ycZshUhdukI",
-      "https://www.youtube.com/embed/ycZshUhdukI",
-      "https://www.youtube.com/embed/ycZshUhdukI",
-    ],
-    reviewCount: faker.random.number({
-      min: 10,
-      max: 100,
-    }),
-    colors: [{
-        id: faker.random.uuid(),
-        title: faker.commerce.color(),
-      },
-      {
-        id: faker.random.uuid(),
-        title: faker.commerce.color(),
-      },
-      {
-        id: faker.random.uuid(),
-        title: faker.commerce.color(),
-      },
-      {
-        id: faker.random.uuid(),
-        title: faker.commerce.color(),
-      },
-    ],
-    catalogueCombination: [{
-        types: {
-          Color: {
-            id: "red",
-            title: "red"
-          },
-          Size: {
-            id: "L",
-            title: "L"
-          },
-          MaterialType: {
-            id: "cotton",
-            title: "cotton"
-          },
-        },
-        regularPrice: 2000,
-        specialPrice: 1500,
-      },
-      {
-        types: {
-          Color: {
-            id: "red",
-            title: "red"
-          },
-          Size: {
-            id: "XL",
-            title: "XL"
-          },
-          MaterialType: {
-            id: "Xcotton",
-            title: "Xcotton"
-          },
-        },
-        regularPrice: 2000,
-        specialPrice: 1500,
-      },
-      {
-        types: {
-          Color: {
-            id: "blue",
-            title: "blue"
-          },
-          Size: {
-            id: "XL",
-            title: "XL"
-          },
-          MaterialType: {
-            id: "nylon",
-            title: "nylon"
-          },
-        },
-        regularPrice: 2001,
-        specialPrice: 1501,
-      },
-      {
-        types: {
-          Color: {
-            id: "green",
-            title: "green"
-          },
-          Size: {
-            id: "XXL",
-            title: "XXL"
-          },
-          MaterialType: {
-            id: "soft-fabric",
-            title: "soft-fabric"
-          },
-        },
-        regularPrice: 2002,
-        specialPrice: 1502,
-      },
-      {
-        types: {
-          Color: {
-            id: "black",
-            title: "black"
-          },
-          Size: {
-            id: "XXXL",
-            title: "XXXL"
-          },
-          MaterialType: {
-            id: "hard-fabric",
-            title: "hard-fabric"
-          },
-        },
-        regularPrice: 1502,
-      },
-    ],
+
     attributes: prepareProductAttribute(),
     isOnStock: faker.random.boolean(),
     categoryAncestor,
@@ -466,7 +351,8 @@ export const getProductReview = async (ctx) => {
         max: 5,
       }),
       review: faker.lorem.paragraph(),
-      replies: [{
+      replies: [
+        {
           id: faker.random.uuid(),
           date: "2020-01-01",
           name: faker.name.firstName() + " " + faker.name.lastName(),
@@ -535,7 +421,8 @@ export const getProductRating = async (ctx) => {
   let ratingDetails = {
     totalReviews: 100,
     avgRating: 3,
-    rating: [{
+    rating: [
+      {
         rating: 5,
         review: 50,
       },
@@ -634,7 +521,8 @@ function getDeal(ctx) {
     data.push({
       id: faker.random.uuid(),
       image: baseUrl + faker.random.arrayElement(productImages),
-      title: "Get" +
+      title:
+        "Get" +
         faker.random.number({
           min: 10,
           max: 50,
@@ -671,7 +559,8 @@ function getSpecialEvents(ctx) {
     data.push({
       id: faker.random.uuid(),
       image: baseUrl + faker.random.arrayElement(productImages),
-      title: "Get" +
+      title:
+        "Get" +
         faker.random.number({
           min: 10,
           max: 50,
@@ -715,7 +604,8 @@ function getCategoryGallery(ctx) {
 }
 
 export const availablelocations = async (ctx) => {
-  ctx.body = [{
+  ctx.body = [
+    {
       id: faker.random.uuid(),
       name: "Kathmandu",
     },
@@ -829,7 +719,8 @@ export const getCity = async (ctx) => {
 export const getDistricts = async (ctx) => {
   let result = [];
 
-  ctx.body = [{
+  ctx.body = [
+    {
       id: 28,
       name: "Kathmandu",
     },
@@ -871,17 +762,18 @@ export const search = async (ctx) => {
 export const getPageConfiguration = async (ctx) => {
   let data = [];
 
-  let slider = [{
+  let slider = [
+    {
       id: 1,
       title: "Something",
       link: "product/14e7aad5-6e5a-4cfd-9850-8e7343a35da4",
-      img: "http://localhost:3000/assets/banner-one.png",
+      img: `${baseUrl}banner-one.png`,
     },
     {
       id: 2,
       title: "Something",
       link: "product/14e7aad5-6e5a-4cfd-9850-8e7343a35da4",
-      img: "http://localhost:3000/assets/banner-three.png",
+      img: `${baseUrl}banner-three.png`,
     },
   ];
 
@@ -1013,31 +905,37 @@ export const getPageConfiguration = async (ctx) => {
 export const getNotifications = async (ctx) => {
   // ctx.body = ctx.request.query.page;
   // return;
-  let notification = [{
+  let notification = [
+    {
       id: faker.random.uuid(),
       title: "Lorem ipsum",
-      image: "https://t4.ftcdn.net/jpg/02/66/65/73/240_F_266657349_5QMR6FiWIk0VAZHojNd7cdClDR5V6Ph2.jpg",
-      description: " Secondary line text. Lorem ipsum dolor sit amet consectetur adipiscit elit.",
+      image:
+        "https://t4.ftcdn.net/jpg/02/66/65/73/240_F_266657349_5QMR6FiWIk0VAZHojNd7cdClDR5V6Ph2.jpg",
+      description:
+        " Secondary line text. Lorem ipsum dolor sit amet consectetur adipiscit elit.",
       date: "21 Jul 2020, Tuesday",
-      status: "1",
+      read: true,
       link: "",
     },
     {
       id: faker.random.uuid(),
       title: "Lorem ipsum",
-      image: "https://t4.ftcdn.net/jpg/02/66/65/73/240_F_266657349_5QMR6FiWIk0VAZHojNd7cdClDR5V6Ph2.jpg",
-      description: " Secondary line text. Lorem ipsum dolor sit amet consectetur adipiscit elit.",
+      image:
+        "https://t4.ftcdn.net/jpg/02/66/65/73/240_F_266657349_5QMR6FiWIk0VAZHojNd7cdClDR5V6Ph2.jpg",
+      description:
+        " Secondary line text. Lorem ipsum dolor sit amet consectetur adipiscit elit.",
       date: "21 Jul 2020, Tuesday",
-      status: "1",
+      read: false,
       link: "",
     },
     {
       id: faker.random.uuid(),
       title: "Lorem ipsum",
       image: "",
-      description: " Secondary line text. Lorem ipsum dolor sit amet consectetur adipiscit elit.",
+      description:
+        " Secondary line text. Lorem ipsum dolor sit amet consectetur adipiscit elit.",
       date: "21 Jul 2020, Tuesday",
-      status: "0",
+      read: false,
       link: "/product/938f010c-ded0-438d-8fe5-77230298be09",
     },
   ];
@@ -1063,6 +961,114 @@ export const deleteNotification = async (ctx) => {
   ctx.body = {
     success: true,
   };
+};
+
+export const searchAtttribute = async (ctx) => {
+  let colors = [
+    faker.commerce.color(),
+    faker.commerce.color(),
+    faker.commerce.color(),
+    faker.commerce.color(),
+    faker.commerce.color(),
+  ];
+  ctx.body = [
+    {
+      label: "Categories",
+      search: "category",
+      componentType: "g-filter-search",
+      placeholder: "Please Enter Category",
+      options: [
+        {
+          value: faker.random.uuid(),
+          label: faker.commerce.department(),
+        },
+        {
+          value: faker.random.uuid(),
+          label: faker.commerce.department(),
+        },
+        {
+          value: faker.random.uuid(),
+          label: faker.commerce.department(),
+        },
+        {
+          value: faker.random.uuid(),
+          label: faker.commerce.department(),
+        },
+        {
+          value: faker.random.uuid(),
+          label: faker.commerce.department(),
+        },
+      ],
+    },
+    {
+      label: "Color",
+      placeholder: "Search color",
+      componentType: "g-filter-search",
+      color: true,
+      options: [
+        {
+          label: colors[0],
+          value: colors[0],
+        },
+        {
+          label: colors[1],
+          value: colors[1],
+        },
+        {
+          label: colors[2],
+          value: colors[2],
+        },
+        {
+          label: colors[3],
+          value: colors[3],
+        },
+        {
+          label: colors[4],
+          value: colors[4],
+        },
+      ],
+    },
+    {
+      label: "Brands",
+      search: "brand",
+      componentType: "g-filter-search",
+      placeholder: "Please Enter Brand",
+      options: [
+        {
+          value: faker.random.uuid(),
+          label: faker.company.companyName(),
+        },
+        {
+          value: faker.random.uuid(),
+          label: faker.company.companyName(),
+        },
+        {
+          value: faker.random.uuid(),
+          label: faker.company.companyName(),
+        },
+        {
+          value: faker.random.uuid(),
+          label: faker.company.companyName(),
+        },
+        {
+          value: faker.random.uuid(),
+          label: faker.company.companyName(),
+        },
+      ],
+    },
+    {
+      label: "Range",
+      componentType: "g-range",
+      min: 97,
+      max: 970,
+      prefix: "Npr",
+    },
+    {
+      label: "Rating",
+      componentType: "g-rating-group",
+      placeholder: "Please Enter Filter Rating",
+    },
+  ];
 };
 
 export const func = async (ctx) => {};

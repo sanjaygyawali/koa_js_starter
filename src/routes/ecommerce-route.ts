@@ -27,6 +27,7 @@ import {
   getProductFaq,
   getProductAttributes,
   getSystemConfig,
+  searchAtttribute,
 } from "../controllers/GharbataiController";
 import { production } from "knexfile";
 
@@ -75,3 +76,6 @@ router.delete(`${baseUrl}/notifications/:id`, deleteNotification);
 // router.get(`${baseUrl}/notes/:id`, jwtMiddleware, show);
 // router.put(`${baseUrl}/notes/:id`, jwtMiddleware, update);
 // router.delete(`${baseUrl}/notes/:id`, jwtMiddleware, del);
+
+// search page  apis.
+router.get(`${baseUrl}/attribute/search`, searchAtttribute);
