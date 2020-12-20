@@ -111,6 +111,14 @@ function getProducts(ctx) {
 
 function prepareProductAttribute() {
   return [{
+      name: "Brand",
+      type: "product-attribute-brand",
+      brand: {
+        id: faker.random.uuid(),
+        name: faker.company.companyName(),
+      },
+    },
+    {
       name: "Color",
       type: "product-attribute-color",
       items: [{
@@ -135,14 +143,7 @@ function prepareProductAttribute() {
         },
       ],
     },
-    {
-      name: "Brand",
-      type: "product-attribute-brand",
-      brand: {
-        id: faker.random.uuid(),
-        name: faker.company.companyName(),
-      },
-    },
+
     {
       name: "Size",
       type: "product-attribute-box",
@@ -236,6 +237,13 @@ export const getProductDetail = async (ctx) => {
     isOnWishList: faker.random.boolean(),
     cartCount: 6,
     productDetail: [{
+        type: "exchange-policy-list-item",
+        data: {
+          days: 5,
+          policyUrl: `/exchange-policy/${faker.random.uuid()}`,
+        },
+      },
+      {
         type: "product-rating",
         data: {
           totalReviews: 100,
@@ -263,13 +271,7 @@ export const getProductDetail = async (ctx) => {
           ],
         },
       },
-      {
-        type: "exchange-policy-list-item",
-        data: {
-          days: 5,
-          policyUrl: `/exchange-policy/${faker.random.uuid()}`,
-        },
-      },
+
     ],
     regularPrice: faker.random.number({
       min: 1000,
