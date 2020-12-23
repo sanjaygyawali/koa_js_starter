@@ -143,6 +143,7 @@ const mockUserData = {
   phone: "9844776371",
   image: baseUrl + "240_F_185089663_87mLybPDYom0JKTbefhdSjHFhdIm0Qqy.jpg",
   unreadNotificationCount: 7,
+  itemInWishListCount: 18,
 };
 
 export const authenticate = async (ctx) => {

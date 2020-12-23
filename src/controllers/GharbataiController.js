@@ -1055,4 +1055,41 @@ export const searchAtttribute = async (ctx) => {
   ];
 };
 
+export const toggleWishList = async (ctx) => {
+  ctx.body = {
+    isOnWishList: ctx.params.action === "add",
+    productId: ctx.params.id,
+    itemInWishListCount: 12,
+  };
+};
+
+export const getWishListItems = async (ctx) => {
+  let data = [];
+  let loop = 0;
+
+  for (let i = 0; i < 10; i++) {
+    data.push({
+      id: faker.random.uuid(),
+      title: faker.commerce.productName(),
+      isOnSale: faker.random.boolean(),
+      image: baseUrl + faker.random.arrayElement(productImages),
+      isOnWishList: true,
+      brand: faker.company.companyName(),
+      rating: faker.random.number({
+        min: 1,
+        max: 5,
+      }),
+      regularPrice: faker.random.number({
+        min: 1000,
+        max: 1500,
+      }),
+      specialPrice: faker.random.number({
+        min: 100,
+        max: 1000,
+      }),
+    });
+  }
+  ctx.body = data;
+};
+
 export const func = async (ctx) => {};
