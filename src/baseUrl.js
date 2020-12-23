@@ -11,4 +11,4 @@ var adresses = Object.keys(ifaces).reduce(function (result, dev) {
   );
 });
 
-export default "http://192.168.43.112:3000/assets/";
+export default "http://0.0.0.0:3000/assets/";

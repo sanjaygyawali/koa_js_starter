@@ -28,6 +28,8 @@ import {
   getProductAttributes,
   getSystemConfig,
   searchAtttribute,
+  toggleWishList,
+  getWishListItems,
 } from "../controllers/GharbataiController";
 import { production } from "knexfile";
 
@@ -79,3 +81,8 @@ router.delete(`${baseUrl}/notifications/:id`, deleteNotification);
 
 // search page  apis.
 router.get(`${baseUrl}/attribute/search`, searchAtttribute);
+
+// baseurl
+router.put(`${baseUrl}/wish-list/:id/:action`, toggleWishList);
+router.get(`${baseUrl}/wish-list/:id/:action`, toggleWishList);
+router.get(`${baseUrl}/wish-list`, getWishListItems);
