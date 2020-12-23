@@ -143,32 +143,31 @@ function prepareProductAttribute() {
     //     name: faker.company.companyName(),
     //   },
     // },
-    // {
-    //   name: "Size",
-    //   type: "product-attribute-box",
-    //   items: [
-    //     {
-    //       enable: faker.random.boolean(),
-    //       id: "L",
-    //       title: "L",
-    //     },
-    //     {
-    //       enable: faker.random.boolean(),
-    //       id: "XL",
-    //       title: "XL",
-    //     },
-    //     {
-    //       enable: faker.random.boolean(),
-    //       id: "XXL",
-    //       title: "XXL",
-    //     },
-    //     {
-    //       enable: faker.random.boolean(),
-    //       id: "XXXL",
-    //       title: "XXXL",
-    //     },
-    //   ],
-    // },
+    {
+      name: "Size",
+      type: "product-attribute-box",
+      items: [{
+          enable: faker.random.boolean(),
+          id: "L",
+          title: "L",
+        },
+        {
+          enable: faker.random.boolean(),
+          id: "XL",
+          title: "XL",
+        },
+        {
+          enable: faker.random.boolean(),
+          id: "XXL",
+          title: "XXL",
+        },
+        {
+          enable: faker.random.boolean(),
+          id: "XXXL",
+          title: "XXXL",
+        },
+      ],
+    },
     {
       name: "Brand",
       componentType: "product-attribute-box",
