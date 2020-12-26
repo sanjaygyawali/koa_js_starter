@@ -853,9 +853,9 @@ export const getPageConfiguration = async (ctx) => {
     type: "category-gallery",
     config: {
       title: "Shop by category",
-      to: {
-        path: "/categories",
-      },
+      // to: {
+      //   path: "",
+      // },
     },
     data: getCategoryGallery(ctx),
   };
