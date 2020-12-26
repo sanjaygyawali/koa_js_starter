@@ -85,6 +85,11 @@ function getProducts(ctx) {
         min: 100,
         max: 1000,
       }),
+      defaultAttribute: {
+        Brand: "APPLE",
+        MaterialType: "nylon",
+        Color: "green",
+      },
     });
   }
   let pagination = {
@@ -653,6 +658,11 @@ export const cartItemDetails = async (ctx) => {
         max: 1000,
       }),
       quantity: items[i].quantity,
+      attributes: {
+        Brand: "APPLE",
+        MaterialType: "nylon",
+        Color: "green",
+      },
     });
   }
   ctx.body = data;
@@ -1106,6 +1116,12 @@ export const getWishListItems = async (ctx) => {
     });
   }
   ctx.body = data;
+};
+
+export const getApplicationConfiguration = async (ctx) => {
+  ctx.body = {
+    deliveryCharge: 1250,
+  };
 };
 
 export const func = async (ctx) => {};

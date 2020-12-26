@@ -30,6 +30,7 @@ import {
   searchAtttribute,
   toggleWishList,
   getWishListItems,
+  getApplicationConfiguration,
 } from "../controllers/GharbataiController";
 import { production } from "knexfile";
 
@@ -86,3 +87,6 @@ router.get(`${baseUrl}/attribute/search`, searchAtttribute);
 router.put(`${baseUrl}/wish-list/:id/:action`, toggleWishList);
 router.get(`${baseUrl}/wish-list/:id/:action`, toggleWishList);
 router.get(`${baseUrl}/wish-list`, getWishListItems);
+
+// site-configuration
+router.get(`${baseUrl}/get-site-setting`, getApplicationConfiguration);
