@@ -11,4 +11,6 @@ var adresses = Object.keys(ifaces).reduce(function (result, dev) {
   );
 });
 
-export default "http://0.0.0.0:3000/assets/";
+const url = process.env.APP_URL;
+const port = process.env.APP_PORT || 3000;
+export default `${url}:${port}/assets/`;
